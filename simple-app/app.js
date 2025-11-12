@@ -233,12 +233,15 @@ function saveToStorage(key, value) {
 }
 
 function initializeStorage() {
-  if (!getFromStorage('appState')) {
-    // Create placeholder matches and messages for demo
-    const now = new Date();
-    const yesterday = new Date(now - 24 * 60 * 60 * 1000);
-    const twoDaysAgo = new Date(now - 2 * 24 * 60 * 60 * 1000);
+  // Create placeholder matches and messages for demo
+  const now = new Date();
+  const yesterday = new Date(now - 24 * 60 * 60 * 1000);
+  const twoDaysAgo = new Date(now - 2 * 24 * 60 * 60 * 1000);
 
+  const existingState = getFromStorage('appState');
+
+  // Always populate demo data (or keep existing if already has data)
+  if (!existingState || (existingState.matches.length === 0 && existingState.messages.length === 0)) {
     saveToStorage('appState', {
       swipes: [
         // Alex Chen (user 1 - technical) has swiped on these people
@@ -270,8 +273,8 @@ function initializeStorage() {
       ratings: [
         { rater_id: 1, rated_id: 11, rating: 5, review_text: "Amazing entrepreneur with great ideas!", created_at: yesterday.toISOString() }
       ],
-      swipesRemaining: 20,
-      lastSwipeReset: new Date().toISOString()
+      swipesRemaining: existingState ? existingState.swipesRemaining : 20,
+      lastSwipeReset: existingState ? existingState.lastSwipeReset : new Date().toISOString()
     });
   }
 }
