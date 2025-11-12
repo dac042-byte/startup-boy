@@ -1,0 +1,209 @@
+/* ===== DISCOVER PAGE STYLING - Edit here ===== */
+
+.discover-page {
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+  padding: 2rem 1rem;
+}
+
+.discover-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ===== DISCOVER HEADER - Edit here ===== */
+
+.discover-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.discover-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #8B5CF6, #EC4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+/* ===== SWIPES COUNTER - Edit here ===== */
+
+.swipes-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.swipes-icon {
+  font-size: 1.25rem;
+}
+
+.swipes-text {
+  font-size: 1rem;
+}
+
+/* ===== CARD STACK STYLING - Edit here ===== */
+
+.card-stack {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 600px;
+  margin: 0 auto 2rem;
+}
+
+.card-behind {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: scale(0.95);
+  opacity: 0.5;
+  z-index: 0;
+}
+
+/* ===== NO MORE CARDS - Edit here ===== */
+
+.no-more-cards {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.no-cards-icon {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+
+.no-more-cards h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #1F2937;
+  margin-bottom: 0.5rem;
+}
+
+.no-more-cards p {
+  color: #6B7280;
+  margin-bottom: 1.5rem;
+}
+
+/* ===== SWIPE ACTION BUTTONS - Edit here ===== */
+
+.swipe-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.swipe-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.swipe-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.swipe-btn:active {
+  transform: scale(0.95);
+}
+
+.swipe-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: scale(1);
+}
+
+.swipe-btn-dislike {
+  background: linear-gradient(135deg, #FEE2E2, #FCA5A5);
+}
+
+.swipe-btn-dislike:hover {
+  background: linear-gradient(135deg, #FCA5A5, #EF4444);
+}
+
+.swipe-btn-like {
+  background: linear-gradient(135deg, #D1FAE5, #6EE7B7);
+}
+
+.swipe-btn-like:hover {
+  background: linear-gradient(135deg, #6EE7B7, #10B981);
+}
+
+.swipe-btn-icon {
+  font-size: 2rem;
+}
+
+/* ===== OUT OF SWIPES MESSAGE - Edit here ===== */
+
+.out-of-swipes {
+  background: #FEF3C7;
+  border: 2px solid #FCD34D;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #92400E;
+  font-weight: 600;
+}
+
+.out-of-swipes a {
+  color: #8B5CF6;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.out-of-swipes a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .discover-page {
+    padding: 1rem 0.5rem;
+  }
+
+  .discover-title {
+    font-size: 2rem;
+  }
+
+  .card-stack {
+    height: 550px;
+  }
+
+  .swipe-actions {
+    gap: 1.5rem;
+  }
+
+  .swipe-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 1.75rem;
+  }
+}

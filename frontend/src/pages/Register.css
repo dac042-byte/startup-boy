@@ -1,0 +1,143 @@
+/* ===== REGISTER PAGE STYLING - Edit here ===== */
+
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+  padding: 2rem 1rem;
+}
+
+.register-container {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideInUp 0.5s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.register-title {
+  font-size: 2rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #8B5CF6, #EC4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.register-subtitle {
+  color: #6B7280;
+  font-size: 1rem;
+}
+
+.register-form {
+  margin-bottom: 1.5rem;
+}
+
+.register-footer {
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid #E5E7EB;
+  color: #6B7280;
+}
+
+.register-link {
+  color: #8B5CF6;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== USER TYPE SELECTION BUTTONS - Edit here ===== */
+
+.user-type-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.user-type-btn {
+  background: white;
+  border: 3px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.user-type-btn:hover {
+  border-color: #8B5CF6;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(139, 92, 246, 0.2);
+}
+
+.user-type-btn.active {
+  border-color: #8B5CF6;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+  box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+}
+
+.user-type-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.user-type-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1F2937;
+  margin-bottom: 0.25rem;
+}
+
+.user-type-desc {
+  font-size: 0.875rem;
+  color: #6B7280;
+}
+
+@media (max-width: 640px) {
+  .register-container {
+    padding: 2rem 1.5rem;
+  }
+
+  .register-title {
+    font-size: 1.75rem;
+  }
+
+  .user-type-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .user-type-btn {
+    padding: 1.25rem;
+  }
+
+  .user-type-icon {
+    font-size: 2.5rem;
+  }
+}
