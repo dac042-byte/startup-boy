@@ -234,11 +234,42 @@ function saveToStorage(key, value) {
 
 function initializeStorage() {
   if (!getFromStorage('appState')) {
+    // Create placeholder matches and messages for demo
+    const now = new Date();
+    const yesterday = new Date(now - 24 * 60 * 60 * 1000);
+    const twoDaysAgo = new Date(now - 2 * 24 * 60 * 60 * 1000);
+
     saveToStorage('appState', {
-      swipes: [],
-      matches: [],
-      messages: [],
-      ratings: [],
+      swipes: [
+        // Alex Chen (user 1 - technical) has swiped on these people
+        { swiper_id: 1, swiped_id: 11, swipe_type: 'like', timestamp: twoDaysAgo.toISOString() },
+        { swiper_id: 1, swiped_id: 12, swipe_type: 'like', timestamp: twoDaysAgo.toISOString() },
+        { swiper_id: 1, swiped_id: 13, swipe_type: 'dislike', timestamp: yesterday.toISOString() },
+        // They swiped right on Alex
+        { swiper_id: 11, swiped_id: 1, swipe_type: 'like', timestamp: twoDaysAgo.toISOString() },
+        { swiper_id: 12, swiped_id: 1, swipe_type: 'like', timestamp: yesterday.toISOString() },
+      ],
+      matches: [
+        // Alex (1) matched with Olivia (11)
+        { match_id: 1, user1_id: 1, user2_id: 11, matched_at: twoDaysAgo.toISOString(), status: 'active' },
+        // Alex (1) matched with Michael (12)
+        { match_id: 2, user1_id: 1, user2_id: 12, matched_at: yesterday.toISOString(), status: 'active' },
+      ],
+      messages: [
+        // Conversation between Alex (1) and Olivia (11)
+        { id: 1, match_id: 1, sender_id: 11, message_text: "Hi! I love your portfolio! Your project on React is amazing 🚀", sent_at: twoDaysAgo.toISOString(), read_status: true },
+        { id: 2, match_id: 1, sender_id: 1, message_text: "Thank you! I checked out your social commerce idea - it's really innovative!", sent_at: twoDaysAgo.toISOString(), read_status: true },
+        { id: 3, match_id: 1, sender_id: 11, message_text: "Would love to discuss working together! Are you available for a call this week?", sent_at: yesterday.toISOString(), read_status: true },
+        { id: 4, match_id: 1, sender_id: 1, message_text: "Absolutely! I'm free Thursday afternoon. We could talk about the technical architecture.", sent_at: yesterday.toISOString(), read_status: true },
+
+        // Conversation between Alex (1) and Michael (12)
+        { id: 5, match_id: 2, sender_id: 12, message_text: "Hey! Your backend experience is exactly what I need for my fintech app 💰", sent_at: yesterday.toISOString(), read_status: true },
+        { id: 6, match_id: 2, sender_id: 1, message_text: "Thanks for reaching out! Tell me more about your fintech idea.", sent_at: yesterday.toISOString(), read_status: true },
+        { id: 7, match_id: 2, sender_id: 12, message_text: "It's a micro-investing platform for students. I have partnerships lined up already!", sent_at: now.toISOString(), read_status: false },
+      ],
+      ratings: [
+        { rater_id: 1, rated_id: 11, rating: 5, review_text: "Amazing entrepreneur with great ideas!", created_at: yesterday.toISOString() }
+      ],
       swipesRemaining: 20,
       lastSwipeReset: new Date().toISOString()
     });
