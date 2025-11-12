@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompConnect - Find Your Project Partner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ========== LOGIN PAGE ========== -->
+    <div id="loginPage" class="page active">
+        <div class="login-container animate-in">
+            <div class="app-logo">💡 CompConnect</div>
+            <h1 class="login-title">Welcome Back!</h1>
+            <p class="login-subtitle">Find your perfect project partner</p>
+
+            <div class="login-form">
+                <input type="email" id="loginEmail" placeholder="Email address" class="input-field">
+                <input type="password" id="loginPassword" placeholder="Password" class="input-field">
+                <button onclick="loginUser()" class="btn btn-primary btn-large">Log In</button>
+            </div>
+
+            <div class="divider">
+                <span>OR TRY DEMO</span>
+            </div>
+
+            <div class="demo-buttons">
+                <button onclick="quickLogin('technical')" class="demo-btn">
+                    <span class="demo-icon">💻</span>
+                    <div>
+                        <strong>Login as Technical User</strong>
+                        <small>Alex Chen - Full-stack Dev</small>
+                    </div>
+                </button>
+                <button onclick="quickLogin('non-technical')" class="demo-btn">
+                    <span class="demo-icon">💡</span>
+                    <div>
+                        <strong>Login as Idea Maker</strong>
+                        <small>Olivia Brown - Entrepreneur</small>
+                    </div>
+                </button>
+            </div>
+
+            <p class="signup-link">
+                Don't have an account? <a href="#" onclick="showRegister()">Sign up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- ========== REGISTER PAGE ========== -->
+    <div id="registerPage" class="page">
+        <div class="register-container animate-in">
+            <button onclick="showLogin()" class="back-button">← Back</button>
+            <div class="app-logo">💡 CompConnect</div>
+            <h1 class="register-title">Join CompConnect</h1>
+
+            <div class="user-type-selection">
+                <h3>I am...</h3>
+                <div class="user-type-cards">
+                    <div class="user-type-card" onclick="selectUserType('technical')">
+                        <div class="type-icon">💻</div>
+                        <h4>I'm Technical</h4>
+                        <p>Developer, Designer, Engineer</p>
+                    </div>
+                    <div class="user-type-card" onclick="selectUserType('non-technical')">
+                        <div class="type-icon">💡</div>
+                        <h4>I Have Ideas</h4>
+                        <p>Entrepreneur, Visionary</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="register-form">
+                <input type="email" id="regEmail" placeholder="Email address" class="input-field">
+                <input type="password" id="regPassword" placeholder="Password (6+ characters)" class="input-field">
+                <input type="password" id="regConfirmPassword" placeholder="Confirm password" class="input-field">
+                <select id="regCountry" class="input-field">
+                    <option value="">Select country</option>
+                    <option value="USA">USA</option>
+                    <option value="Canada">Canada</option>
+                    <option value="UK">UK</option>
+                    <option value="India">India</option>
+                </select>
+                <input type="text" id="regSchool" placeholder="School / University" class="input-field">
+                <button onclick="registerUser()" class="btn btn-primary btn-large">Create Account</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== PROFILE SETUP (Multi-step) ========== -->
+    <div id="profileSetupPage" class="page">
+        <div class="profile-setup-container animate-in">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            <p class="progress-text">Step <span id="currentStep">1</span> of 3</p>
+
+            <!-- Step 1: Basic Info -->
+            <div id="setupStep1" class="setup-step active">
+                <h2>Basic Information</h2>
+                <input type="text" id="setupName" placeholder="Full name" class="input-field">
+                <input type="number" id="setupAge" placeholder="Age" min="18" max="100" class="input-field">
+                <textarea id="setupBio" placeholder="Tell us about yourself..." class="textarea-field"></textarea>
+                <button onclick="nextStep()" class="btn btn-primary btn-large">Next</button>
+            </div>
+
+            <!-- Step 2: Photos -->
+            <div id="setupStep2" class="setup-step">
+                <h2>Add Photos</h2>
+                <p class="step-subtitle">Add a profile picture</p>
+                <div class="photo-preview">
+                    <img id="profilePicPreview" src="https://i.pravatar.cc/400?img=1" alt="Profile">
+                    <button onclick="changeProfilePic()" class="btn btn-secondary btn-small">Change Photo</button>
+                </div>
+                <div class="step-buttons">
+                    <button onclick="prevStep()" class="btn btn-secondary">Back</button>
+                    <button onclick="nextStep()" class="btn btn-primary">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Type-specific details -->
+            <div id="setupStep3" class="setup-step">
+                <h2 id="step3Title">Your Details</h2>
+
+                <!-- Technical Users -->
+                <div id="technicalFields" style="display: none;">
+                    <input type="text" id="setupSkills" placeholder="Skills (e.g., React, Python, ML)" class="input-field">
+                    <input type="url" id="setupPortfolio" placeholder="Portfolio link (optional)" class="input-field">
+                    <input type="url" id="setupGithub" placeholder="GitHub URL (optional)" class="input-field">
+                </div>
+
+                <!-- Non-Technical Users -->
+                <div id="nonTechnicalFields" style="display: none;">
+                    <textarea id="setupProjectIdea" placeholder="Describe your project idea..." class="textarea-field"></textarea>
+                    <input type="number" id="setupEquity" placeholder="Equity offering (%)" min="0" max="100" class="input-field">
+                    <select id="setupTimeline" class="input-field">
+                        <option value="">Select timeline</option>
+                        <option value="1-3 months">1-3 months</option>
+                        <option value="3-6 months">3-6 months</option>
+                        <option value="6-12 months">6-12 months</option>
+                    </select>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="setupPayment">
+                        Can offer payment
+                    </label>
+                </div>
+
+                <div class="step-buttons">
+                    <button onclick="prevStep()" class="btn btn-secondary">Back</button>
+                    <button onclick="completeSetup()" class="btn btn-primary">Complete Profile</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MAIN APP ========== -->
+    <div id="mainApp" class="page">
+
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-logo">💡 CompConnect</div>
+            <div class="nav-menu">
+                <a href="#" onclick="showTab('discover')" class="nav-link active" data-page="discover">Discover</a>
+                <a href="#" onclick="showTab('matches')" class="nav-link" data-page="matches">Matches</a>
+                <a href="#" onclick="showTab('settings')" class="nav-link" data-page="settings">Settings</a>
+                <a href="#" onclick="showTab('premium')" class="nav-link" data-page="premium">Premium</a>
+            </div>
+        </nav>
+
+        <!-- ========== DISCOVER PAGE ========== -->
+        <div id="discoverTab" class="tab-content active">
+            <div class="discover-header">
+                <h1 class="page-title">Discover</h1>
+                <div class="swipes-counter">
+                    <span class="fire-icon">🔥</span>
+                    <span id="swipesRemaining">20 swipes remaining</span>
+                </div>
+            </div>
+
+            <div class="card-stack-container">
+                <div id="cardStack" class="card-stack">
+                    <!-- Profile cards will be inserted here -->
+                </div>
+
+                <div class="swipe-actions">
+                    <button onclick="swipe('dislike')" class="action-btn dislike-btn">
+                        <span class="btn-icon">✕</span>
+                    </button>
+                    <button onclick="swipe('like')" class="action-btn like-btn">
+                        <span class="btn-icon">❤️</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="noMoreProfiles" class="no-more-profiles" style="display: none;">
+                <div class="big-emoji">😔</div>
+                <h2>No More Profiles</h2>
+                <p>Check back later or upgrade to premium!</p>
+                <button onclick="resetApp()" class="btn btn-primary">Refresh</button>
+            </div>
+        </div>
+
+        <!-- ========== MATCHES PAGE ========== -->
+        <div id="matchesTab" class="tab-content">
+            <h1 class="page-title">Your Matches</h1>
+            <div id="matchesGrid" class="matches-grid">
+                <!-- Matches will be inserted here -->
+            </div>
+            <div id="noMatchesYet" class="empty-state" style="display: none;">
+                <div class="big-emoji">💔</div>
+                <h2>No matches yet</h2>
+                <p>Keep swiping to find your partner!</p>
+                <button onclick="showTab('discover')" class="btn btn-primary">Start Swiping</button>
+            </div>
+        </div>
+
+        <!-- ========== CHAT PAGE ========== -->
+        <div id="chatTab" class="tab-content">
+            <div id="chatInterface" style="display: none;">
+                <div class="chat-header">
+                    <button onclick="showTab('matches')" class="back-btn">← Back</button>
+                    <div class="chat-user-info">
+                        <img id="chatAvatar" src="" alt="Avatar" class="chat-avatar">
+                        <div>
+                            <h3 id="chatUserName"></h3>
+                            <p class="status">Active now</p>
+                        </div>
+                    </div>
+                    <button onclick="showRatingModal()" class="rate-btn">⭐ Rate</button>
+                </div>
+
+                <div id="messagesContainer" class="messages-container">
+                    <!-- Messages will be inserted here -->
+                </div>
+
+                <div class="message-input-bar">
+                    <input type="text" id="messageInput" placeholder="Type a message..." class="message-input" onkeypress="if(event.key==='Enter') sendMessage()">
+                    <button onclick="sendMessage()" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+
+            <div id="selectMatchPrompt" class="empty-state">
+                <div class="big-emoji">💬</div>
+                <h2>Select a match to chat</h2>
+                <p>Go to Matches to start a conversation</p>
+            </div>
+        </div>
+
+        <!-- ========== SETTINGS PAGE ========== -->
+        <div id="settingsTab" class="tab-content">
+            <h1 class="page-title">Settings</h1>
+
+            <div class="settings-container">
+                <div class="settings-section">
+                    <h3>Profile Settings</h3>
+                    <div class="setting-item">
+                        <label>Name</label>
+                        <input type="text" id="settingsName" class="input-field">
+                    </div>
+                    <div class="setting-item">
+                        <label>Bio</label>
+                        <textarea id="settingsBio" class="textarea-field"></textarea>
+                    </div>
+                    <button onclick="saveSettings()" class="btn btn-primary">Save Changes</button>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Account</h3>
+                    <div class="setting-item">
+                        <label>Email</label>
+                        <input type="email" id="settingsEmail" class="input-field" disabled>
+                    </div>
+                    <div class="setting-item">
+                        <label>Subscription</label>
+                        <p id="subscriptionStatus" class="subscription-badge">Free</p>
+                    </div>
+                </div>
+
+                <div class="settings-section danger-zone">
+                    <h3>Danger Zone</h3>
+                    <button onclick="logout()" class="btn btn-secondary">Logout</button>
+                    <button onclick="deleteAccount()" class="btn btn-danger">Delete Account</button>
+                </div>
+
+                <div class="settings-section">
+                    <a href="privacy.html" target="_blank" class="privacy-link">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PREMIUM PAGE ========== -->
+        <div id="premiumTab" class="tab-content">
+            <div class="premium-header">
+                <h1 class="premium-title">Upgrade to Premium</h1>
+                <p class="premium-subtitle">Unlock unlimited potential</p>
+            </div>
+
+            <div class="pricing-card">
+                <div class="best-value-badge">Best Value</div>
+                <div class="price">$2<span>/month</span></div>
+                <p class="price-subtext">Cancel anytime</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔥</div>
+                    <h3>Unlimited Swipes</h3>
+                    <p>No daily limits. Swipe freely!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👀</div>
+                    <h3>See Who Liked You</h3>
+                    <p>Know who's interested first</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Premium Badge</h3>
+                    <p>Stand out on profiles</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Advanced Filters</h3>
+                    <p>Filter by skills & more</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Profile Analytics</h3>
+                    <p>See your profile stats</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Priority Support</h3>
+                    <p>Get help faster</p>
+                </div>
+            </div>
+
+            <button onclick="upgradeToPremium()" class="btn btn-primary btn-large upgrade-btn">
+                Upgrade to Premium Now
+            </button>
+            <p class="demo-note">This is a demo - no real payment</p>
+        </div>
+    </div>
+
+    <!-- ========== MATCH POPUP (Modal) ========== -->
+    <div id="matchPopup" class="modal-overlay">
+        <div class="modal-content match-modal">
+            <div class="confetti" id="confetti"></div>
+            <div class="match-hearts">❤️</div>
+            <h1 class="match-title">It's a Match!</h1>
+            <p class="match-subtitle">You and <span id="matchName"></span> liked each other!</p>
+
+            <div class="match-user-preview">
+                <img id="matchAvatar" src="" alt="Match" class="match-avatar">
+            </div>
+
+            <div class="match-actions">
+                <button onclick="openChatWithMatch()" class="btn btn-primary btn-large">Send Message</button>
+                <button onclick="closeMatchPopup()" class="btn btn-secondary btn-large">Keep Swiping</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== RATING MODAL ========== -->
+    <div id="ratingModal" class="modal-overlay">
+        <div class="modal-content rating-modal">
+            <h2>Rate <span id="ratingUserName"></span></h2>
+            <div class="star-rating">
+                <span class="star" onclick="setRating(1)">⭐</span>
+                <span class="star" onclick="setRating(2)">⭐</span>
+                <span class="star" onclick="setRating(3)">⭐</span>
+                <span class="star" onclick="setRating(4)">⭐</span>
+                <span class="star" onclick="setRating(5)">⭐</span>
+            </div>
+            <textarea id="reviewText" placeholder="Leave a review (optional)" class="textarea-field"></textarea>
+            <div class="modal-actions">
+                <button onclick="submitRating()" class="btn btn-primary">Submit Rating</button>
+                <button onclick="closeRatingModal()" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
