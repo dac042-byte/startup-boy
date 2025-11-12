@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSpring, animated } from 'react-spring';
-import { useDrag } from 'react-use-gesture';
 import { getDiscoverCandidates, recordSwipe } from '../utils/api';
 import SwipeCard from '../components/SwipeCard';
 import MatchPopup from '../components/MatchPopup';
@@ -13,12 +11,7 @@ function Discover() {
   const [swipesRemaining, setSwipesRemaining] = useState(20);
   const [matchedUser, setMatchedUser] = useState(null);
   const [showMatchPopup, setShowMatchPopup] = useState(false);
-
-  const [{ x, y, rotate }, api] = useSpring(() => ({
-    x: 0,
-    y: 0,
-    rotate: 0,
-  }));
+  const [swipeDirection, setSwipeDirection] = useState(null);
 
   useEffect(() => {
     fetchCandidates();
@@ -43,13 +36,8 @@ function Discover() {
     const currentUser = candidates[currentIndex];
     const swipeType = direction === 'right' ? 'like' : 'dislike';
 
-    // Animate card off screen
-    const xMovement = direction === 'right' ? 1000 : -1000;
-    api.start({
-      x: xMovement,
-      rotate: direction === 'right' ? 45 : -45,
-      config: { tension: 200, friction: 20 },
-    });
+    // Trigger swipe animation
+    setSwipeDirection(direction);
 
     try {
       const response = await recordSwipe({
@@ -68,57 +56,13 @@ function Discover() {
       // Move to next card after animation
       setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-        api.start({ x: 0, y: 0, rotate: 0, immediate: true });
+        setSwipeDirection(null);
       }, 300);
     } catch (error) {
       console.error('Swipe failed:', error);
-      // Reset animation on error
-      api.start({ x: 0, y: 0, rotate: 0 });
+      setSwipeDirection(null);
     }
   };
-
-  const bind = useDrag(
-    ({ movement: [mx, my], down, velocity }) => {
-      const trigger = velocity > 0.2;
-
-      if (!down && trigger) {
-        // User released with enough velocity
-        if (Math.abs(mx) > 100) {
-          handleSwipe(mx > 0 ? 'right' : 'left');
-        } else {
-          // Snap back
-          api.start({ x: 0, y: 0, rotate: 0 });
-        }
-      } else if (down) {
-        // Update position while dragging
-        api.start({
-          x: mx,
-          y: my,
-          rotate: mx / 20,
-          immediate: true,
-        });
-
-        // Show overlay based on drag direction
-        const card = document.querySelector('.swipe-card');
-        if (card) {
-          const leftOverlay = card.querySelector('.swipe-overlay-left');
-          const rightOverlay = card.querySelector('.swipe-overlay-right');
-
-          if (mx < -50) {
-            leftOverlay.style.opacity = Math.min(Math.abs(mx) / 200, 1);
-            rightOverlay.style.opacity = 0;
-          } else if (mx > 50) {
-            rightOverlay.style.opacity = Math.min(mx / 200, 1);
-            leftOverlay.style.opacity = 0;
-          } else {
-            leftOverlay.style.opacity = 0;
-            rightOverlay.style.opacity = 0;
-          }
-        }
-      }
-    },
-    { axis: 'x' }
-  );
 
   if (loading) {
     return (
@@ -165,11 +109,8 @@ function Discover() {
               )}
 
               {/* Current card */}
-              <div {...bind()} style={{ touchAction: 'none' }}>
-                <SwipeCard
-                  user={currentCandidate}
-                  style={{ x, y, rotate }}
-                />
+              <div className={`current-card ${swipeDirection === 'left' ? 'swipe-left' : ''} ${swipeDirection === 'right' ? 'swipe-right' : ''}`}>
+                <SwipeCard user={currentCandidate} />
               </div>
             </>
           )}

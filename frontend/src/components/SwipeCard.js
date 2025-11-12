@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useSpring, animated } from 'react-spring';
-import { useDrag } from 'react-use-gesture';
 import './SwipeCard.css';
 
 function SwipeCard({ user, onSwipe, style }) {
@@ -22,16 +20,8 @@ function SwipeCard({ user, onSwipe, style }) {
     }
   };
 
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
-
   return (
-    <animated.div className="swipe-card" style={style}>
+    <div className="swipe-card" style={style}>
       {/* Image section with carousel */}
       <div className="swipe-card-image-container" onClick={handleImageClick}>
         <img
@@ -137,7 +127,7 @@ function SwipeCard({ user, onSwipe, style }) {
           </div>
         )}
       </div>
-    </animated.div>
+    </div>
   );
 }
 
